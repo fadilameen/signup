@@ -19,6 +19,7 @@ class signUp extends StatelessWidget {
     return null;
   }
 
+jgh
   String? _validateemail(String? value) {
     if (value == null || value.isEmpty) {
       return 'Email cannot be empty';
