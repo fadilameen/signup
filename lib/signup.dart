@@ -1,80 +1,96 @@
-// ignore_for_file: prefer_const_constructors, avoid_print, camel_case_types, must_be_immutable
-
 import 'package:flutter/material.dart';
 import 'textfield.dart';
 
-class signUp extends StatelessWidget {
-  signUp({super.key, required this.mainContent});
+class SignUp extends StatefulWidget {
+  const SignUp({super.key});
 
-  final Widget mainContent;
+  @override
+  State<SignUp> createState() => _SignUpState();
+}
+
+class _SignUpState extends State<SignUp> {
+  final _formKey = GlobalKey<FormState>();
+
+  TextEditingController name = TextEditingController();
+  TextEditingController email = TextEditingController();
+  TextEditingController pass = TextEditingController();
+
+  String? _validatename(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Name cannot be empty';
+    }
+    return null;
+  }
+
+  String? _validateemail(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Email cannot be empty';
+    }
+    if (!value.contains('@')) {
+      return 'Not a valid email';
+    }
+    return null;
+  }
+
+  String? _validatepass(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Password cannot be empty';
+    }
+    if (value.length < 8) {
+      return 'Must be greater than 8 characters';
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: Stack(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/1.png"),
-                fit: BoxFit.cover,
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(27, 40, 27, 40),
+      child: Form(
+        key: _formKey,
+        child: ListView(
+          children: [
+            const Center(
+              child: Text(
+                "Create your account",
+                style: TextStyle(fontSize: 22),
               ),
             ),
-          ),
-          Align(
-            alignment: Alignment(0, -0.7), // Center of the upper half
-            child: Container(
-              height: 94,
-              width: 108,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("assets/image 23.png"),
-                ),
-              ),
+            const SizedBox(
+              height: 50,
             ),
-          ),
-          LayoutBuilder(
-            builder: (context, constraints) {
-              final screenheight = constraints.maxHeight;
-              return Stack(
-                children: [
-                  box(screenheight * 0.33, Color(0xFFB9DB7E)),
-                  box(screenheight * 0.345, Color(0xFF3FB283)),
-                  Positioned(
-                      left: 3,
-                      right: 3,
-                      top: screenheight * 0.36,
-                      bottom: 5,
-                      child: mainContent),
-                ],
-              );
-            },
-          ),
-          Align(
-            alignment: Alignment(-1, -0.12), // Center of the upper half
-            child: Container(
-              height: 84,
-              width: 67,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("assets/image 19.png"),
-                ),
-              ),
+            Txt(
+              uptext: "Full Name",
+              hinttext: "You Name",
+              controller: name,
+              validator: _validatename,
             ),
-          ),
-          Align(
-            alignment: Alignment(1, 1.032), // Center of the upper half
-            child: Container(
-              height: 126,
-              width: 101,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("assets/image 22.png"),
-                ),
-              ),
+            Txt(
+              uptext: "Email",
+              hinttext: "Your email",
+              controller: email,
+              validator: _validateemail,
             ),
-          ),
-        ],
+            Txt(
+              uptext: "Password",
+              hinttext: "Enter Password",
+              controller: pass,
+              validator: _validatepass,
+            ),
+            ElevatedButton(
+              onPressed: () {
+                if (_formKey.currentState!.validate()) {}
+              },
+              child: const Text("Create Account"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text("Go Back"),
+            )
+          ],
+        ),
       ),
     );
   }

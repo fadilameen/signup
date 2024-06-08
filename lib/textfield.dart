@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
 import 'package:flutter/material.dart';
 
 class Txt extends StatelessWidget {
@@ -22,8 +20,8 @@ class Txt extends StatelessWidget {
         RichText(
           text: TextSpan(
             text: uptext,
-            style: TextStyle(color: Colors.black, fontSize: 16.0),
-            children: <TextSpan>[
+            style: const TextStyle(color: Colors.black, fontSize: 16.0),
+            children: const <TextSpan>[
               TextSpan(
                 text: '*',
                 style: TextStyle(color: Colors.red),
@@ -44,19 +42,4 @@ class Txt extends StatelessWidget {
       ],
     );
   }
-}
-
-late double top;
-late Color color;
-Positioned box(double top, Color color) {
-  return Positioned(
-    left: 3,
-    right: 3,
-    top: top,
-    bottom: 5,
-    child: Container(
-      decoration:
-          BoxDecoration(borderRadius: BorderRadius.circular(40), color: color),
-    ),
-  );
 }
